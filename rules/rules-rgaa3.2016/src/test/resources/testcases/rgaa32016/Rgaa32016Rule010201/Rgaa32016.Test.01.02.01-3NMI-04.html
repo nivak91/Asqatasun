@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Rgaa32016 Test.1.2.1 Passed 01</title>
+        <title>Rgaa32016 Test.1.2.1 NMI 04</title>
     </head>
-    <body class="Passed">
+    <body class="NMI">
         <div>
-            <h1>Rgaa32016 Test.1.2.1 Passed 01</h1>
+            <h1>Rgaa32016 Test.1.2.1 NMI 04</h1>
 
 <!-- START [test-detail] -->
             <div class="test-detail" lang="fr">
@@ -16,10 +16,13 @@
 
 
             <div class="testcase">
+                <img src="mock-image.jpg" alt="" /> 
+                <a> <img src="image-link.jpg" alt="" /> </a> 
+                <img src="image-with-longdesc.jpg" alt="" longdesc="" /> 
+                <img src="image-without-alt.jpg" /> 
+                <img role="role-informative-image" src="mock-informative-image.jpg" alt="" /> 
             </div>
-            <div class="test-explanation">
-                 Passed. 
-            </div>
+            <p class="test-explanation"> NMI : One image is found on the page and is not identified by marker. The other images are either an image link, either an image with a longdesc attribute, either an image marked as informative or an image without alt attribute. They are all out of scope. </p> 
         </div>
     </body>
 </html>
