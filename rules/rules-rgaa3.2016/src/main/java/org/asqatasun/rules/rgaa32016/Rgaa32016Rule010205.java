@@ -19,23 +19,64 @@
  */
 package org.asqatasun.rules.rgaa32016;
 
-import org.asqatasun.ruleimplementation.AbstractNotTestedRuleImplementation;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.asqatasun.entity.audit.TestSolution;
+import org.asqatasun.ruleimplementation.AbstractMarkerPageRuleImplementation;
+import org.asqatasun.rules.elementchecker.text.TextEmptinessChecker;
+import org.asqatasun.rules.elementselector.ImageElementSelector;
+import org.asqatasun.rules.keystore.CssLikeQueryStore;
+import static org.asqatasun.rules.keystore.HtmlElementStore.TEXT_ELEMENT2;
+import static org.asqatasun.rules.keystore.MarkerStore.DECORATIVE_IMAGE_MARKER;
+import static org.asqatasun.rules.keystore.MarkerStore.INFORMATIVE_IMAGE_MARKER;
+import static org.asqatasun.rules.keystore.RemarkMessageStore.CHECK_ELEMENT_WITH_EMPTY_ALT_MSG;
+import static org.asqatasun.rules.keystore.RemarkMessageStore.CHECK_ELEMENT_WITH_NOT_EMPTY_ALT_MSG;
+import static org.asqatasun.rules.keystore.RemarkMessageStore.DECORATIVE_ELEMENT_WITH_NOT_EMPTY_ALT_MSG;
+import org.asqatasun.rules.textbuilder.SimpleTextElementBuilder;
 
 /**
  * Implementation of the rule 1.2.5 of the referential RGAA 3.2016
- * <br/>
+ *
  * For more details about the implementation, refer to <a href="http://doc.asqatasun.org/en/90_Rules/rgaa3.2016/01.Images/Rule-1-2-5.html">the rule 1.2.5 design page.</a>
  * @see <a href="http://references.modernisation.gouv.fr/rgaa-accessibilite/criteres.html#test-1-2-5">1.2.5 rule specification</a>
- *
- * @author
  */
-public class Rgaa32016Rule010205 extends AbstractNotTestedRuleImplementation {
 
+public class Rgaa32016Rule010205 extends AbstractMarkerPageRuleImplementation {
+    
     /**
-     * Default constructor
+     * Constructor
      */
     public Rgaa32016Rule010205 () {
-        super();
+        super(
+                new ImageElementSelector(CssLikeQueryStore.CANVAS_NOT_IN_LINK_CSS_LIKE_QUERY, true, false),
+                
+                // the decorative images are part of the scope
+                DECORATIVE_IMAGE_MARKER, 
+                
+                // the informative images are not part of the scope
+                INFORMATIVE_IMAGE_MARKER, 
+
+                // checker for elements identified by marker
+                new TextEmptinessChecker(
+                    // the text element builder
+                    new SimpleTextElementBuilder(),
+                    // solution when text is empty
+                    new ImmutablePair(TestSolution.PASSED, ""),
+                    // solution when text is not empty
+                    new ImmutablePair(TestSolution.FAILED, DECORATIVE_ELEMENT_WITH_NOT_EMPTY_ALT_MSG),
+                    // evidence elements
+                    TEXT_ELEMENT2),
+                
+                // checker for elements not identified by marker
+                new TextEmptinessChecker(
+                    // the text element builder
+                    new SimpleTextElementBuilder(),
+                    // solution when text is empty
+                    new ImmutablePair(TestSolution.NEED_MORE_INFO, CHECK_ELEMENT_WITH_EMPTY_ALT_MSG),
+                    // solution when text is notempty
+                    new ImmutablePair(TestSolution.NEED_MORE_INFO, CHECK_ELEMENT_WITH_NOT_EMPTY_ALT_MSG),
+                    // evidence elements
+                    TEXT_ELEMENT2)
+            );
     }
 
 }
