@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-        <title>Rgaa32016 Test.1.2.2 Passed 01</title>
+        <title>Rgaa32016 Test.1.2.2 Passed 05</title>
     </head>
     <body class="Passed">
         <div>
-            <h1>Rgaa32016 Test.1.2.2 Passed 01</h1>
+            <h1>Rgaa32016 Test.1.2.2 Passed 05</h1>
 
 <!-- START [test-detail] -->
             <div class="test-detail" lang="fr">
@@ -16,9 +16,11 @@
 
 
             <div class="testcase">
+                <img alt="" src="mock-image.jpg" usemap="#mock-map" /> 
+                <map id="mock-map" name="mock-map"> <area id="id-decorative-area" alt=""></area> <area class="class-informative-area" alt="Not empty alt"></area> <area href="mock-area.html" alt="Not empty alt"></area> <a href="mock-link.html"> <area alt="Not empty alt"></area> </a> </map> 
             </div>
             <div class="test-explanation">
-                 Passed. 
+                 Passed: All the &lt;area&gt; of the page are marked as decorative and their alt attribute is empty. The other &lt;area&gt; are either within a link, either marked as informative or have a &quot;href&quot; attribute. They are all out of scope. 
             </div>
         </div>
     </body>
