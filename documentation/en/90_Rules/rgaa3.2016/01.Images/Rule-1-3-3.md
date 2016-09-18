@@ -1,8 +1,7 @@
 # RGAA 3.2016 - Rule 1.3.3
 
 ## Summary
-No-check rule
-
+This test consists in checking whether each button associated with an image that handles information has a relevant alternative.
 
 ## Business description
 
@@ -18,28 +17,69 @@ No-check rule
 ### Level
 **A**
 
-
 ## Technical description
 
 ### Scope
 **Page**
 
 ### Decision level
-@@@TODO
-
+**Semi-Decidable**
 
 ## Algorithm
 
 ### Selection
-None
+
+#### Set1
+
+All the `<input>` tags with a `"type"` attribute equals to "image" and an `"alt"` attribute (css selector : `input[type=image][alt]`)
 
 ### Process
-None
+
+#### Test1
+
+For all elements of **Set1**, check whether the content of the `"alt"` attribute is not relevant (see Notes for details about relevancy test). 
+
+For each occurrence of true-result of **Test1**, raise a MessageA.
+
+For each occurrence of false-result of **Test1**, raise a MessageB
+
+##### MessageA 
+
+-    code : **NotPertinentAlt** 
+-    status: Failed
+-    parameter : `"alt"` attribute, `"src"` attribute, tag name
+-    present in source : yes
+
+##### MessageB 
+
+-    code : **CheckPertinenceOfAltAttributeOfInformativeImage** 
+-    status: Pre-Qualified
+-    parameter : `"alt"` attribute, `"src"` attribute, tag name
+-    present in source : yes
 
 ### Analysis
 
-#### No Tested
-In all cases
+#### Failed
+
+At least one `<input>` tag with a `"type"` attribute equals to "image" has an irrelevant `"alt"` attribute (**Test1** returns true for at least one element)
+
+#### Pre-qualified
+
+The alternatives of all the `<input>` tags with a `"type"` attribute equals to "image" need to be manually checked (**Test1** returns false for all the elements of **Set1**) 
+
+#### Not Applicable
+
+The page has no `<input>` tag with a `"type"` attribute equals to "image" tag and an `"alt"` attribute (**Set1** is empty)
+
+## Notes
+
+The content of the `"alt"` attribute is seen as not relevant if :
+
+- empty
+- only composed of non-alphanumerical characters
+- identical to the `"src"` attribute
+- it has an extension of image type (loaded by the nomenclature named **ImageFileExtensions** composed of : jpg, gif, jpeg, png, bmp)
+
 
 
 ##  TestCases
