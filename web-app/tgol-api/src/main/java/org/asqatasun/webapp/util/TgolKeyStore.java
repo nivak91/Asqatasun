@@ -33,6 +33,7 @@ public final class TgolKeyStore {
     private TgolKeyStore(){};
     
     /* url keys */
+    public static final String METRICS_PAGE = "/metrics-page";
     public static final String DISPATCH_URL = "/dispatch";
     public static final String LOGIN_URL = "/login";
     public static final String LOGOUT_URL = "/logout";
@@ -120,6 +121,8 @@ public final class TgolKeyStore {
     public static final String AUDIT_SYNTHESIS_URL = "/audit-synthesis";
     public static final String AUDIT_SYNTHESIS_CONTRACT_URL =
             CONTRACT_URL+AUDIT_SYNTHESIS_URL;
+    public static final String AUDIT_SYNTHESIS_CONTRACT_METRICS_PAGE_URL =
+        AUDIT_SYNTHESIS_CONTRACT_URL+METRICS_PAGE;
     public static final String FAILED_TEST_LIST_URL = "/failed-test-list";
     public static final String FAILED_TEST_LIST_CONTRACT_URL =
             CONTRACT_URL+FAILED_TEST_LIST_URL;
@@ -152,6 +155,7 @@ public final class TgolKeyStore {
     public static final String DEMO_URL = "/demo";
 
     /* view name keys */
+    public static final String METRICS_VIEW_NAME = "MetricsView";
     public static final String DISPATCH_VIEW_REDIRECT_NAME = "dispatch-redirect";
     public static final String LOGIN_VIEW_NAME = "login";
     public static final String HOME_VIEW_NAME = "home";
@@ -234,6 +238,7 @@ public final class TgolKeyStore {
     public static final String NO_DEMO_AVAILABLE_VIEW_NAME = "no-demo-available";
 
     /* data model keys */
+    public static final String WQAM = "wqam";
     public static final String AUDIT_SET_UP_COMMAND_KEY = "auditSetUpCommand";
     public static final String ADD_SCENARIO_COMMAND_KEY = "addScenarioCommand";
     public static final String FORGOTTEN_PASSWORD_COMMAND_KEY = "forgottenPasswordCommand";

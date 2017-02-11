@@ -57,6 +57,9 @@
         <div id="project-creation-date">
             <span class="synthesis-meta-title"><fmt:message key="contract.createdOn"/> : </span><fmt:formatDate type="date" value="${statistics.date}" dateStyle="long"/> <fmt:formatDate type="time" value="${statistics.date}"/>
         </div>
+        <div id="My-page-link">
+                	<a href="<c:url value="/home/contract/audit-synthesis/metrics-page.html?audit=${param.audit}"/>">MyPage</a>
+        </div>
         <c:if test="${hasPageCounter == 'true'}">
             <div class="audit-nb-of-pages">
                 <c:set var="pageCounterLinkTitle" scope="page">

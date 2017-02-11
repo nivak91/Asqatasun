@@ -94,6 +94,39 @@ public interface CriterionStatisticsDAO extends GenericDAO<CriterionStatistics, 
      */
     CriterionStatistics findCriterionStatisticsByWebResource(Criterion criterion ,WebResourceStatistics webResourceStatistics);
 
+    /**
+     *
+     * @param IdWebResourceStatistics
+     * @return number of passed failed and nmi tests for a WebResource
+     */
+    Integer FindWebResourceTestCount(Long IdWebResourceStatistics);
 
+    /**
+     *
+     * @param IdWebResourceStatistics , IdTheme
+     * @return number of passed failed and nmi tests for a WebResource and a Theme
+     */
+    Integer FindWebResourceTestCountByTheme(Long IdWebResourceStatistics, int IdTheme);
+
+    /**
+     *
+     * @param IdWebResourceStatistics , IdTheme , CriterionResult
+     * @return number of passed failed and nmi tests for a WebResource a Theme and a Criterion Result
+     */
+    Integer FindWebResourceTestCountByThemeAndResult(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult);
+
+    /**
+     *
+     * @param IdWebResourceStatistics , IdTheme , CriterionResult , IdLevel
+     * @return number of nmi tests for a given WebResource, Theme, Criterion Result and Level
+     */
+    Integer FindBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel);
+
+    /**
+     *
+     * @param IdWebResourceStatistics , IdTheme , CriterionResult , IdLevel
+     * @return sum of passed, failed, nmi tests for a given WebResource, Theme, Criterion Result and Level
+     */
+    Integer FindPossibleBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel);
 
 }

@@ -55,6 +55,9 @@ public class WebResourceStatisticsImpl
     @Column(name = "Raw_Mark")
     private Float rawMark;
 
+    @Column(name = "WQAM")
+    private Float WQAM;
+
     @Column(name="Nb_Passed")
     private int nbOfPassed=0;
 
@@ -149,6 +152,18 @@ public class WebResourceStatisticsImpl
     public void setRawMark(Float rawMark) {
         this.rawMark = rawMark;
     }
+
+    @Override
+    public Float getWQAM() {
+        return WQAM;
+    }
+
+    @Override
+    public void setWQAM(Float WQAM) {
+        this.WQAM = WQAM;
+
+    }
+
 
     @Override
     public int getNbOfFailed() {

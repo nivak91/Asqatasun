@@ -72,4 +72,28 @@ public class CriterionStatisticsDataServiceImpl extends AbstractGenericDataServi
         return ((CriterionStatisticsDAO) entityDao).findCriterionStatisticsCountByWebResource(webResourceId);
     }
 
+    @Override
+    public Integer GetWebResourceTestCount(Long IdWebResourceStatistics) {
+        return ((CriterionStatisticsDAO) entityDao).FindWebResourceTestCount(IdWebResourceStatistics);
+    }
+
+    @Override
+    public Integer GetWebResourceTestCountByTheme(Long IdWebResourceStatistics, int IdTheme) {
+        return ((CriterionStatisticsDAO) entityDao).FindWebResourceTestCountByTheme(IdWebResourceStatistics,IdTheme);
+    }
+
+    @Override
+    public Integer GetWebResourceTestCountByThemeAndResult(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult) {
+        return ((CriterionStatisticsDAO) entityDao).FindWebResourceTestCountByThemeAndResult(IdWebResourceStatistics,IdTheme,CriterionResult);
+    }
+
+    @Override
+    public Integer GetBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel) {
+        return ((CriterionStatisticsDAO) entityDao).FindBarriers(IdWebResourceStatistics,IdTheme,CriterionResult,IdLevel);
+    }
+
+    @Override
+    public Integer GetPossibleBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel) {
+        return ((CriterionStatisticsDAO) entityDao).FindPossibleBarriers(IdWebResourceStatistics,IdTheme,CriterionResult,IdLevel);
+    }
 }

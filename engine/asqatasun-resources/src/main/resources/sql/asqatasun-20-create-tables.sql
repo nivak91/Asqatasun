@@ -573,6 +573,7 @@ CREATE TABLE IF NOT EXISTS `WEB_RESOURCE_STATISTICS` (
   `Id_Web_Resource_Statistics` bigint(20) NOT NULL AUTO_INCREMENT,
   `Mark` float DEFAULT NULL,
   `Raw_Mark` float DEFAULT NULL,
+  `WQAM` float DEFAULT NULL,
   `Nb_Passed` int(11) DEFAULT NULL,
   `Nb_Failed` int(11) DEFAULT NULL,
   `Nb_Nmi` int(11) DEFAULT NULL,

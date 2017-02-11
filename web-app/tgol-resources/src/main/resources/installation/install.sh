@@ -8,18 +8,18 @@ set -o errexit
 
 declare prefix="/"
 
-declare database_user=
-declare database_passwd=
-declare database_db=
-declare database_host=
-declare asqatasun_url=
-declare asqatasun_webapp_dir=
-declare tomcat_webapps=
-declare tomcat_user=
-declare asqa_admin_email=
-declare asqa_admin_passwd=
-declare firefox_esr_binary_path=
-declare display_port=
+declare database_user='asqatasun'
+declare database_passwd='asqaP4sswd'
+declare database_db='asqatasun'
+declare database_host='localhost'
+declare asqatasun_url='http://localhost:8080/asqatasun/'
+declare asqatasun_webapp_dir='webapp'
+declare tomcat_webapps='/var/lib/tomcat7/webapps'
+declare tomcat_user='tomcat7'
+declare asqa_admin_email='nikovaka@ece.auth.gr'
+declare asqa_admin_passwd='0laZjWMu'
+declare firefox_esr_binary_path='/opt/firefox/firefox'
+declare display_port=':99'
 
 declare omit_cleanup=true
 declare quiet=false

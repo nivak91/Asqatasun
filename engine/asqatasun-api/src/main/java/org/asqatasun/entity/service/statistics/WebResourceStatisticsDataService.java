@@ -96,4 +96,26 @@ public interface WebResourceStatisticsDataService
      * @param webResource
      */
     WebResourceStatistics createWebResourceStatisticsForManualAudit(Audit audit, WebResource webResource, List<ProcessResult> netResultList);
+
+    /**
+     *
+     * @param AuditId
+     * @return
+     */
+    Long getMinIdWebResourceStatistics(Long AuditId);
+
+    /**
+     *
+     * @param AuditId
+     * @return
+     */
+    Long getNumberOfPages(Long AuditId);
+
+    /**
+     *
+     * @param AuditId
+     * @return
+     */
+    Long getMaxIdWebResourceStatistics(Long AuditId);
+
 }

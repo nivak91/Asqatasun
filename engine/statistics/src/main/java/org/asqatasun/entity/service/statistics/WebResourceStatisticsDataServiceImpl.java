@@ -122,6 +122,22 @@ public class WebResourceStatisticsDataServiceImpl extends
                 .findWebResourceStatisticsByWebResource(webResource);
     }
 
+    @Override
+    public Long getMinIdWebResourceStatistics(Long AuditId){
+        return ((WebResourceStatisticsDAO) entityDao).minIdWebResourceStatistics(AuditId);
+    }
+
+    @Override
+    public Long getNumberOfPages(Long AuditId) {
+        return ((WebResourceStatisticsDAO) entityDao).numberOfPages(AuditId);
+
+    }
+
+    @Override
+    public Long getMaxIdWebResourceStatistics(Long AuditId) {
+        return ((WebResourceStatisticsDAO) entityDao).maxIdWebResourceStatistics(AuditId);
+
+    }
     /**
      * This method compute the mark of the audit. Here is the algorithm formula
      * : ((1-ratioNMI) * passed/(passed+failed) + ratioNMI *

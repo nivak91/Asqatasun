@@ -24,6 +24,8 @@ package org.asqatasun.entity.dao.statistics;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import org.apache.log4j.Logger;
+
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -46,6 +48,7 @@ import org.asqatasun.sdk.entity.dao.jpa.AbstractJPADAO;
 public class CriterionStatisticsDAOImpl extends AbstractJPADAO<CriterionStatistics, Long>
         implements CriterionStatisticsDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(CriterionStatisticsDAOImpl.class);
     private static final String JOIN_PROCESS_RESULT =" JOIN r.processResultSet pr";
     private static final String JOIN_TEST =" JOIN pr.test t";
 
@@ -205,4 +208,78 @@ public class CriterionStatisticsDAOImpl extends AbstractJPADAO<CriterionStatisti
 		}
 	}
 
+    @Override
+    public Integer FindWebResourceTestCount(Long IdWebResourceStatistics) {
+        Query query = entityManager.createNativeQuery("SELECT SUM(Nb_Failed+Nb_Passed+Nb_Nmi) FROM" + getEntityClass().getName() + "cs" + "WHERE cs.Id_Web_Resource_Statistics = ?1");
+        query.setParameter(1, IdWebResourceStatistics);
+        try{
+            return (Integer) query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            LOGGER.debug("WebResourceTestCountFail");
+            return null;
+        }
+    }
+
+    @Override
+    public Integer FindWebResourceTestCountByTheme(Long IdWebResourceStatistics, int IdTheme) {
+        Query query = entityManager.createNativeQuery("SELECT SUM(Nb_Failed+Nb_Passed+Nb_Nmi) FROM" + "(SELECT Nb_Failed,Nb_Passed,Nb_Nmi from" + getEntityClass().getName() + "cs" + "INNER JOIN CRITERION" + "cr" + "on cs.Id_Criterion=cr.Id_criterion" + "WHERE cs.Id_Web_Resource_Statistics = ?1" + "AND cr.Theme_Id_Theme = ?2)" + "as a");
+        query.setParameter(1, IdWebResourceStatistics);
+        query.setParameter(2, IdTheme);
+        try{
+            return (Integer) query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            LOGGER.debug("WebResourceTestCountByThemeFail");
+            return null;
+        }
+
+    }
+
+    @Override
+    public Integer FindWebResourceTestCountByThemeAndResult(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult) {
+        Query query = entityManager.createNativeQuery("SELECT SUM(Nb_Failed+Nb_Passed+Nb_Nmi) FROM" + "(SELECT Nb_Failed,Nb_Passed,Nb_Nmi from" + getEntityClass().getName() + "cs" + "INNER JOIN CRITERION" + "cr" + "on" + "cs.Id_Criterion=cr.Id_criterion" + "WHERE cs.Id_Web_Resource_Statistics= ?1" +  "AND cr.Theme_Id_Theme = ?2" + "AND cs.Criterion_Result = ?3)" + "as a");
+        query.setParameter(1, IdWebResourceStatistics);
+        query.setParameter(2, IdTheme);
+        query.setParameter(3, CriterionResult);
+        try{
+            return (Integer) query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            LOGGER.debug("WebResourceTestCountByThemeAndResultFail");
+            return null;
+        }
+    }
+
+    @Override
+    public Integer FindBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel) {
+        Query query = entityManager.createNativeQuery("SELECT SUM(Nb_Nmi) FROM" + "(SELECT  Nb_Nmi  FROM" + getEntityClass().getName() + "cs" + "inner join CRITERION" + "cr" + "ON cs.Id_Criterion=cr.Id_Criterion" + "inner join TEST" + "t" + "on t.Id_Criterion=cr.Id_Criterion" + "where cs.Id_Web_Resource_Statistics=?1" + "and cr.Theme_Id_Theme=?2" + "and cs.Criterion_Result=?3" + "and t.Id_Level=?4" + "group by Id_Criterion_Statistics)" + "AS a");
+        query.setParameter(1, IdWebResourceStatistics);
+        query.setParameter(2, IdTheme);
+        query.setParameter(3, CriterionResult);
+        query.setParameter(4, IdLevel);
+        try{
+            return (Integer) query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            LOGGER.debug("FindBarriersFail");
+            return null;
+        }
+    }
+
+    @Override
+    public Integer FindPossibleBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel) {
+        Query query = entityManager.createNativeQuery("SELECT sum(Nb_Passed+Nb_nmi+Nb_Failed) FROM" + "(SELECT Nb_Passed, Nb_Nmi , Nb_Failed  FROM" + getEntityClass().getName() + "cs" + "inner join CRITERION" + "cr" + "ON cs.Id_Criterion=cr.Id_Criterion" + "inner join TEST" + "t" + "on t.Id_Criterion=cr.Id_Criterion" + "where cs.Id_Web_Resource_Statistics=?1" + "and cr.Theme_Id_Theme=?2" + "and cs.Criterion_Result=?3" + "and t.Id_Level=?4" + "group by Id_Criterion_Statistics)" + "AS a");
+        query.setParameter(1, IdWebResourceStatistics);
+        query.setParameter(2, IdTheme);
+        query.setParameter(3, CriterionResult);
+        query.setParameter(4, IdLevel);
+        try{
+            return (Integer) query.getSingleResult();
+        }
+        catch (NoResultException e) {
+            LOGGER.debug("FindPossibleBarriersFail");
+            return null;
+        }
+    }
 }

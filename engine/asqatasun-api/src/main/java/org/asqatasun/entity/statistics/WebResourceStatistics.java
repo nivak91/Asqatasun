@@ -69,6 +69,19 @@ public interface WebResourceStatistics extends Entity, ResultCounter {
      * @param rawMark
      */
     void setRawMark(Float rawMark);
+    /**
+     *
+     * @return
+     */
+
+    Float getWQAM();
+
+    /**
+     *
+     * @param WQAM
+     */
+    void setWQAM(Float WQAM);
+
 
     /**
      *

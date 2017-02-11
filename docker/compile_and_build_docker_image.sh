@@ -147,7 +147,7 @@ function kill_previous_container() {
 
 function do_build() {
     # clean and build
-    (cd "$SOURCE_DIR" ; mvn clean install) ||
+    (cd "$SOURCE_DIR" ; mvn clean install -Dmaven.test.skip=true) ||
         fail "Error at build"
 }
 
@@ -173,7 +173,7 @@ function do_docker_run() {
     RESULT=$(curl -o /dev/null --silent --write-out '%{http_code}\n' ${ASQATASUN_URL})
     set -e
     if [ "${RESULT}" == "000" ]; then
-        DOCKER_RUN="${SUDO} docker run -p ${ADD_IP}${CONTAINER_EXPOSED_PORT}:8080 --name ${CONTAINER_NAME} -d ${IMAGE_NAME}:${TAG_NAME}"
+        DOCKER_RUN="${SUDO} docker run -p ${ADD_IP}${CONTAINER_EXPOSED_PORT}:8080 --name ${CONTAINER_NAME}  -d ${IMAGE_NAME}:${TAG_NAME}"
         eval ${DOCKER_RUN}
     else 
         fail  "${CONTAINER_EXPOSED_PORT} port is already allocated"

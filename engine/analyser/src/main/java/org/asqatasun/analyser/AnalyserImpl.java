@@ -21,6 +21,7 @@
  */
 package org.asqatasun.analyser;
 
+import java.sql.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -154,6 +155,8 @@ public class AnalyserImpl implements Analyser {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+
+
     @Override
     public void run() {
         WebResourceStatistics wrStats = webResourceStatisticsDataService.create();
@@ -173,7 +176,9 @@ public class AnalyserImpl implements Analyser {
             wrStats = computeCriterionStatisticsFromDb(wrStats);
             wrStats = computeTestStatisticsFromDb(wrStats);
             wrStats = computeThemeStatisticsFromDb(wrStats);
+            /*wrStats = computeWQAM(wrStats);*/
         }
+        /*wrStats = computeWQAM(wrStats);*/
         wrStats = computeMark(wrStats);
         wrStats = computeRawMark(wrStats);
         wrStats = computeNumberOfFailedOccurrences(wrStats);
@@ -482,6 +487,181 @@ public class AnalyserImpl implements Analyser {
         wrStatistics.setWeightedNmi(weightedNmi);
         wrStatistics.setWeightedNa(weightedNa);
     }
+
+     /**
+     * This method computes WQAM metric
+     * @param wrStatistics
+     */
+    /*public WebResourceStatistics computeWQAM (WebResourceStatistics wrStatistics)
+    {
+        Connection conn = null;
+        try
+        {
+            conn = getConnection();
+            Long AuditId=wrStatistics.getAudit().getId();
+            PreparedStatement stmt = conn.prepareStatement(NP);
+            stmt.setLong(1,AuditId);
+            PreparedStatement stmt1 = conn.prepareStatement(min_page_ID);
+            stmt1.setLong(1,AuditId);
+            PreparedStatement stmt2 = conn.prepareStatement(max_page_ID);
+            stmt2.setLong(1,AuditId);
+            ResultSet rs = stmt.executeQuery();
+            ResultSet rs1 = stmt1.executeQuery();
+            ResultSet rs2 = stmt2.executeQuery();
+            rs.next();
+            rs1.next();
+            rs2.next();
+            int pages = rs.getInt(1);
+            int min = rs1.getInt(1);
+            int max = rs2.getInt(1);
+            double NT_xy,N_T,NT_x,B,P;
+            String Criterion_result;
+            float WQAM=0,Score1=0,Score2=0,Score3=0,Score4=0;
+            for(int i=min; i <= max; i++){
+                Score3=0;
+                PreparedStatement stmt3 = conn.prepareStatement(NT);
+                stmt3.setInt(1,i);
+                ResultSet rs3 = stmt3.executeQuery();
+                rs3.next();
+                N_T=rs3.getDouble(1);
+                if (N_T==0) continue;
+                for(int x=44; x<57; x++){
+                    Score2=0;
+                    PreparedStatement stmt4 = conn.prepareStatement(NTx);
+                    stmt4.setInt(1,i);
+                    stmt4.setInt(2,x);
+                    ResultSet rs4 = stmt4.executeQuery();
+                    rs4.next();
+                    NT_x=rs4.getDouble(1);
+                    if (NT_x==0) continue;
+                    for(int y=0; y<=1; y++){
+                        Score1=0;
+                        if (y==0){
+                            Criterion_result="NEED_MORE_INFO";
+                            PreparedStatement stmt5 = conn.prepareStatement(NTxy);
+                            stmt5.setInt(1,i);
+                            stmt5.setInt(2,x);
+                            stmt5.setString(3,Criterion_result);
+                            ResultSet rs5 = stmt5.executeQuery();
+                            rs5.next();
+                            NT_xy=rs5.getDouble(1);
+                        }
+                        else{
+                            Criterion_result="FAILED";
+                            PreparedStatement stmt5 = conn.prepareStatement(NTxy);
+                            stmt5.setInt(1,i);
+                            stmt5.setInt(2,x);
+                            stmt5.setString(3,Criterion_result);
+                            ResultSet rs5 = stmt5.executeQuery();
+                            rs5.next();
+                            NT_xy=rs5.getDouble(1);
+                        }
+                        if(NT_xy==0) continue;
+                        for(int z=0; z<=2; z++){
+                            if(y==0){
+                                PreparedStatement stmt6 = conn.prepareStatement(Bxyz1);
+                                stmt6.setInt(1,i);
+                                stmt6.setInt(2,x);
+                                stmt6.setString(3,Criterion_result);
+                                stmt6.setInt(4,z+1);
+                                ResultSet rs6 = stmt6.executeQuery();
+                                rs6.next();
+                                B = rs6.getDouble(1);
+                            }
+
+                            else{
+                                PreparedStatement stmt6 = conn.prepareStatement(Bxyz2);
+                                stmt6.setInt(1,i);
+                                stmt6.setInt(2,x);
+                                stmt6.setString(3,Criterion_result);
+                                stmt6.setInt(4,z+1);
+                                ResultSet rs6 = stmt6.executeQuery();
+                                rs6.next();
+                                B = rs6.getDouble(1);
+                            }
+
+
+
+                            PreparedStatement stmt7 = conn.prepareStatement(Pxyz);
+                            stmt7.setInt(1,i);
+                            stmt7.setInt(2,x);
+                            stmt7.setString(3,Criterion_result);
+                            stmt7.setInt(4,z+1);
+
+                            ResultSet rs7 = stmt7.executeQuery();
+
+                            rs7.next();
+
+                            P = rs7.getDouble(1);
+                            if(P!=0){
+                                double A=calculate_Score(B,P);
+                                Score1+= W[z]*A;
+
+                            }
+
+                        }
+                        Score2=(float)(Score2+((NT_xy/NT_x)*Score1));
+                    }
+                    Score3=(float)(Score3+(NT_x/N_T*Score2));
+                }
+                Score4+=Score3;
+
+            }
+            WQAM =Score4/pages;
+            wrStatistics.setWQAM(WQAM);
+            return wrStatistics;
+
+        }
+        catch (Exception e)
+        {
+            System.err.println("Got an exception! ");
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+        Long AuditId=wrStatistics.getAudit().getId();
+        Long NumberOfPages = webResourceStatisticsDataService.getNumberOfPages(AuditId);
+        Long minWebResourceId = webResourceStatisticsDataService.getMinIdWebResourceStatistics(AuditId);
+        Long maxWebResourceId = webResourceStatisticsDataService.getMaxIdWebResourceStatistics(AuditId);
+        float Score=0,Score1=0,Score2=0,Score3=0,Score4=0,WQAM;
+        double a=0.3,b=20;
+        double W[] = {0.8,0.16,0.04};
+        for(Long i = minWebResourceId; i <= maxWebResourceId; i++){
+            Score3 = 0;
+            Integer NumberOfTests = criterionStatisticsDataService.GetWebResourceTestCount(wrStatistics.getId());
+            if(NumberOfTests==0) continue;
+
+            for( int IdTheme=44; IdTheme<=57; IdTheme++) {
+                Score2=0;
+                Integer NumberOfTestsByTheme = criterionStatisticsDataService.GetWebResourceTestCountByTheme(i, IdTheme);
+                if(NumberOfTestsByTheme == 0) continue;
+                TestSolution[] test = {TestSolution.FAILED,TestSolution.NEED_MORE_INFO};
+                for(TestSolution item : test){
+                    Score1=0;
+                    Integer NumberOfTestsByThemeAndCriterionResult = criterionStatisticsDataService.GetWebResourceTestCountByThemeAndResult(i, IdTheme, item);
+                    if(NumberOfTestsByThemeAndCriterionResult == 0) continue;
+                    for(int IdLevel=1; IdLevel<=3; IdLevel++){
+                        Integer NumberOfBarriers = criterionStatisticsDataService.GetBarriers(i,IdTheme,item,IdLevel);
+                        Integer NumberOfPossibleBarriers = criterionStatisticsDataService.GetPossibleBarriers(i,IdTheme,item,IdLevel);
+                        if(NumberOfPossibleBarriers != 0){
+                            if(NumberOfBarriers/NumberOfPossibleBarriers < (a-100) / (a / NumberOfPossibleBarriers - 100 / b)){
+                                Score = (float) (NumberOfBarriers*(-100/b)+100);
+                            }
+                            else Score = (float) ((-a*NumberOfBarriers/NumberOfPossibleBarriers)+a);
+                            Score1+=W[IdLevel-1]*Score;
+                        }
+                    }
+                    Score2+=((NumberOfTestsByThemeAndCriterionResult/NumberOfTestsByTheme)*Score1);
+                }
+                Score3=Score3+(NumberOfTestsByTheme/NumberOfTests*Score2);
+            }
+            Score4+=Score3;
+        }
+        WQAM = Score4/NumberOfPages;
+        wrStatistics.setWQAM(WQAM);
+        return wrStatistics;
+    }*/
 
     /**
      * This method compute the mark of the audit. Here is the algorithm formula

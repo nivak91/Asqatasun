@@ -100,7 +100,26 @@ public interface WebResourceStatisticsDAO extends GenericDAO<WebResourceStatisti
      * @return The list of WebResourceStatistics for either the manual and the automatic audit
      */
     WebResourceStatistics findWebResourceStatisticsByWebResource(WebResource webResource, boolean manual);
-    
-    
+
+    /**
+     *
+     * @param AuditId
+     * @return The number of pages evaluated for a given Audit
+     */
+    Long numberOfPages(Long AuditId);
+
+    /**
+     *
+     * @param AuditId
+     * @return The Id_Web_Resource_Statistics for the first evaluated page of an Audit
+     */
+    Long minIdWebResourceStatistics(Long AuditId);
+
+    /**
+     *
+     * @param AuditId
+     * @return The Id_Web_Resource_Statistics for the last evaluated page of an Audit
+     */
+    Long maxIdWebResourceStatistics(Long AuditId);
 
 }

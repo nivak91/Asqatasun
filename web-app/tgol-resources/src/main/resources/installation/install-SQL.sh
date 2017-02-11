@@ -8,10 +8,10 @@ set -o errexit
 
 declare prefix="/"
 
-declare database_user=
-declare database_passwd=
-declare database_db=
-declare database_host=
+declare database_user='asqatasun'
+declare database_passwd='asqaP4sswd'
+declare database_db='asqatasun'
+declare database_host='localhost'
 
 declare omit_cleanup=true
 declare quiet=false

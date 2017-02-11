@@ -29,6 +29,8 @@ import org.asqatasun.entity.statistics.WebResourceStatisticsImpl;
 import org.asqatasun.entity.subject.WebResource;
 import org.asqatasun.entity.subject.WebResourceImpl;
 import org.asqatasun.sdk.entity.dao.jpa.AbstractJPADAO;
+import org.apache.log4j.Logger;
+
 
 /**
  * 
@@ -38,6 +40,7 @@ public class WebResourceStatisticsDAOImpl extends
 		AbstractJPADAO<WebResourceStatistics, Long> implements
 		WebResourceStatisticsDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(WebResourceStatisticsDAOImpl.class);
 	private static final String JOIN_PROCESS_RESULT = " LEFT JOIN r.processResultSet pr ";
 	private static final String JOIN_TEST = " LEFT JOIN pr.test t";
 
@@ -245,5 +248,43 @@ public class WebResourceStatisticsDAOImpl extends
 			return null;
 		}
 	}
+    @Override
+    public Long numberOfPages(Long AuditId) {
+        Query query = entityManager.createQuery("SELECT COUNT(*) FROM" + getEntityClass().getName() + "s" +"WHERE s.Id_Audit=:AuditId" + "and s.Http_Status_Code=200");
+        query.setParameter("AuditId", AuditId);
+        try{
+            return (Long) query.getSingleResult();
+        } catch (NoResultException e){
+            LOGGER.debug("numberOfPagesFail");
+            return null;
+        }
+
+    }
+
+    @Override
+    public Long minIdWebResourceStatistics(Long AuditId) {
+        Query query = entityManager.createQuery("SELECT MIN(Id_Web_Resource_Statistics) FROM"+getEntityClass().getName()+ "s" +"WHERE s.Id_Audit=:AuditId" + "and s.Http_Status_Code = 200");
+        query.setParameter("AuditId", AuditId);
+        try{
+            return (Long) query.getSingleResult();
+        } catch (NoResultException e){
+            LOGGER.debug("minIdWebResourceStatisticsFail");
+            return null;
+        }
+
+    }
+
+    @Override
+    public Long maxIdWebResourceStatistics(Long AuditId) {
+        Query query = entityManager.createQuery("SELECT MAX(Id_Web_Resource_Statistics) FROM" + getEntityClass().getName() + "s" + "WHERE s.Id_Audit=:AuditId" + "and s.Http_Status_Code = 200");
+        query.setParameter("AuditId", AuditId);
+        try{
+            return (Long) query.getSingleResult();
+        } catch (NoResultException e){
+            LOGGER.debug("maxIdWebResourceStatisticsFail");
+            return null;
+        }
+
+    }
 
 }

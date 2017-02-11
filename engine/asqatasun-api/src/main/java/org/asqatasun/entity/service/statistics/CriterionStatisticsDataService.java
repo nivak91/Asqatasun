@@ -78,5 +78,15 @@ public interface CriterionStatisticsDataService
      * @return 
      */
     Long getCriterionStatisticsCountByWebResource(Long webResourceId);
-    
+
+    Integer GetWebResourceTestCount(Long IdWebResourceStatistics);
+
+    Integer GetWebResourceTestCountByTheme(Long IdWebResourceStatistics, int IdTheme);
+
+    Integer GetWebResourceTestCountByThemeAndResult(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult);
+
+    Integer GetBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel);
+
+    Integer GetPossibleBarriers(Long IdWebResourceStatistics, int IdTheme, TestSolution CriterionResult, int IdLevel);
+
 }
