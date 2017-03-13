@@ -68,6 +68,8 @@ public class CriterionImpl implements Criterion, Serializable {
     @ManyToOne
     @JoinColumn(name = "Theme_Id_Theme")
     private ThemeImpl theme;
+    @Column(name="Criterion_Severity")
+    private int CriterionSeverity;
 
     public CriterionImpl() {
         super();

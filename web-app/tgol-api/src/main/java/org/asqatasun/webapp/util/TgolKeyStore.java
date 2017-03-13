@@ -238,7 +238,10 @@ public final class TgolKeyStore {
     public static final String NO_DEMO_AVAILABLE_VIEW_NAME = "no-demo-available";
 
     /* data model keys */
+    public static final String WQAMpercentileRank= "WQAMPercentileRank";
+    public static final String EnhancedWQAMpercentileRank= "enhancedWQAMPercentileRank";
     public static final String WQAM = "wqam";
+    public static final String EnhancedWQAM = "enhanced_wqam";
     public static final String AUDIT_SET_UP_COMMAND_KEY = "auditSetUpCommand";
     public static final String ADD_SCENARIO_COMMAND_KEY = "addScenarioCommand";
     public static final String FORGOTTEN_PASSWORD_COMMAND_KEY = "forgottenPasswordCommand";

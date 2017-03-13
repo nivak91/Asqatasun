@@ -2902,10 +2902,31 @@ td.occurences {
 .d3-score-graph .grade-f{
     fill:#ed4b63;
 } /* <50% */
+#WAQMscore {
+    margin-top: 12px;
+    text-align: left;
+}
+#WAQMpercentileRank {
+    margin-top: 12px;
+    text-align: right;
+}
+#EnhancedWAQMResult {
+    margin-top: 12px;
+    text-align: left;
+}
+#EnhancedWAQMpercentileRank {
+    margin-top: 12px;
+    text-align: right;
+}
+
 #d3-audit-score {
     margin-top: 12px;
     text-align: right;
 }
+#WAQMscore .d3-score-text,
+#WAQMpercentileRank .d3-score-text,
+#EnhancedWAQMResult .d3-score-text,
+#EnhancedWAQMpercentileRank .d3-score-text,
 #d3-audit-score .d3-score-text, 
 #d3-ie-audit-score .d3-score-text, 
 #d3-project-score .d3-score-text, 

@@ -13,6 +13,7 @@
            http://www.springframework.org/schema/mvc 
            http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
+    <context:property-placeholder location="classpath:category.properties"/>
     <!-- This annotation needs to be defined in the servlet context to be applied
     at the controller level -->
     <security:global-method-security 

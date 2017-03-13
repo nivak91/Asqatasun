@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS `AUDIT` (
 --
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `WEB_RESOURCE` (
+  `Category` varchar(31) DEFAULT NULL,
   `DTYPE` varchar(31) NOT NULL,
   `Id_Web_Resource` bigint(20) NOT NULL AUTO_INCREMENT,
   `Label` varchar(255) DEFAULT NULL,
@@ -202,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `CRITERION` (
   `Url` varchar(255) DEFAULT NULL,
   `Reference_Id_Reference` bigint(20) DEFAULT NULL,
   `Theme_Id_Theme` bigint(20) DEFAULT NULL,
+  `Criterion_Severity` int(11) DEFAULT '1',
   PRIMARY KEY (`Id_Criterion`),
   UNIQUE INDEX `Cd_Criterion_UNIQUE` (`Cd_Criterion` ASC),
   KEY `FKBCFA1E81E8F67244` (`Theme_Id_Theme`),
@@ -573,7 +575,10 @@ CREATE TABLE IF NOT EXISTS `WEB_RESOURCE_STATISTICS` (
   `Id_Web_Resource_Statistics` bigint(20) NOT NULL AUTO_INCREMENT,
   `Mark` float DEFAULT NULL,
   `Raw_Mark` float DEFAULT NULL,
+  `Category` varchar(31) DEFAULT NULL,
+  `DisabilityType` varchar(31) DEFAULT NULL,
   `WQAM` float DEFAULT NULL,
+  `Enhanced_WQAM` float DEFAULT NULL,
   `Nb_Passed` int(11) DEFAULT NULL,
   `Nb_Failed` int(11) DEFAULT NULL,
   `Nb_Nmi` int(11) DEFAULT NULL,

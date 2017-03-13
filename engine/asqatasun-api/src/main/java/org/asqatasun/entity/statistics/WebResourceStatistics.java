@@ -34,6 +34,9 @@ import org.asqatasun.sdk.entity.Entity;
  */
 public interface WebResourceStatistics extends Entity, ResultCounter {
 
+    String getCategory();
+
+    void setCategory(String category);
     /**
      *
      * @return
@@ -69,12 +72,16 @@ public interface WebResourceStatistics extends Entity, ResultCounter {
      * @param rawMark
      */
     void setRawMark(Float rawMark);
-    /**
-     *
-     * @return
-     */
+
+    void setEnhancedWQAM(Float EnhancedWQAM);
+
+    Float getEnhancedWQAM();
 
     Float getWQAM();
+
+    String getDisabilityType();
+
+    void setDisabilityType(String DisabilityType);
 
     /**
      *

@@ -55,8 +55,17 @@ public class WebResourceStatisticsImpl
     @Column(name = "Raw_Mark")
     private Float rawMark;
 
+    @Column(name = "Enhanced_WQAM")
+    private Float EnhancedWQAM;
+
     @Column(name = "WQAM")
     private Float WQAM;
+
+    @Column(name = "DisabilityType")
+    private String DisabilityType;
+
+    @Column(name = "Category")
+    private String category;
 
     @Column(name="Nb_Passed")
     private int nbOfPassed=0;
@@ -163,6 +172,29 @@ public class WebResourceStatisticsImpl
         this.WQAM = WQAM;
 
     }
+    @Override
+    public Float getEnhancedWQAM() {
+        return EnhancedWQAM;
+    }
+
+    @Override
+    public void setEnhancedWQAM(Float EnhancedWQAM) {
+        this.EnhancedWQAM = EnhancedWQAM;
+
+    }
+    @Override
+    public String getDisabilityType(){return DisabilityType;}
+
+    @Override
+    public void setDisabilityType(String DisabilityType){
+        this.DisabilityType= DisabilityType;
+    }
+
+    @Override
+    public String getCategory() {return category;}
+
+    @Override
+    public void setCategory(String category) {this.category = category;}
 
 
     @Override
